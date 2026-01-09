@@ -1,85 +1,83 @@
 import streamlit as st
 import pandas as pd
+from datetime import date
 
 # =====================
-# TITLE & TEXT ELEMENT
+# WRITE
 # =====================
-st.title("Aplikasi Streamlit Sederhana")
-st.header("Contoh Basic Elements & Widgets")
-st.subheader("Modul Streamlit Halaman 9–11")
-st.caption("Praktikum Streamlit Dasar")
+st.write("Ini adalah contoh penggunaan st.write()")
+
+# =====================
+# TEXT ELEMENTS
+# =====================
+st.title("Aplikasi Streamlit Dasar")
+st.header("Modul Streamlit Halaman 9–11")
+st.subheader("Contoh Text Elements")
+st.caption("Praktikum Streamlit")
 
 st.markdown("""
-Aplikasi ini dibuat untuk menampilkan:
-- Text Elements  
-- Data Display  
-- Widgets  
-- Layout (Sidebar & Columns)
+Streamlit menyediakan berbagai **text elements** seperti:
+- Markdown
+- Title
+- Header
+- Subheader
+- Caption
 """)
 
-st.text("Ini adalah contoh penggunaan st.text()")
+st.text("Ini adalah contoh st.text()")
+
+st.code("""
+import streamlit as st
+st.write("Hello World")
+""", language="python")
 
 # =====================
-# SIDEBAR
+# DATA DISPLAY
 # =====================
-st.sidebar.header("Menu Sidebar")
-nama = st.sidebar.text_input("Masukkan Nama")
-umur = st.sidebar.number_input("Masukkan Umur", min_value=0)
+st.header("Data Display")
+
+data = {
+    "Nama": ["Andi", "Budi", "Citra"],
+    "Nilai": [85, 90, 88]
+}
+
+df = pd.DataFrame(data)
+
+st.subheader("Dataframe")
+st.dataframe(df)
+
+st.subheader("Table")
+st.table(df)
 
 # =====================
-# WIDGETS
+# BASIC WIDGETS
 # =====================
-st.header("Input Pengguna")
+st.header("Basic Widgets")
 
-hobi = st.text_input("Apa hobi Anda?")
-tinggi = st.number_input("Tinggi badan (cm)", min_value=0)
+# Text Input
+nama = st.text_input("Masukkan Nama")
 
+# Number Input
+umur = st.number_input("Masukkan Umur", min_value=0)
+
+# Datetime Input
+tanggal_lahir = st.date_input("Tanggal Lahir", value=date.today())
+
+# Radio Button
 jenis_kelamin = st.radio(
     "Jenis Kelamin",
     ("Laki-laki", "Perempuan")
 )
 
+# Checkbox
 setuju = st.checkbox("Saya menyetujui data di atas")
 
-# =====================
-# BUTTON & OUTPUT
-# =====================
+# Button
 if st.button("Tampilkan Data"):
     if setuju:
-        st.success("Data berhasil ditampilkan!")
         st.write("Nama:", nama)
         st.write("Umur:", umur)
-        st.write("Hobi:", hobi)
-        st.write("Tinggi Badan:", tinggi, "cm")
+        st.write("Tanggal Lahir:", tanggal_lahir)
         st.write("Jenis Kelamin:", jenis_kelamin)
     else:
-        st.warning("Silakan centang persetujuan terlebih dahulu")
-
-# =====================
-# DATA DISPLAY
-# =====================
-st.header("Contoh Dataframe")
-
-data = {
-    "Nama": ["Andi", "Budi", "Citra"],
-    "Umur": [20, 21, 19],
-    "Prodi": ["Informatika", "Sistem Informasi", "Teknik Komputer"]
-}
-
-df = pd.DataFrame(data)
-st.dataframe(df)
-
-# =====================
-# COLUMNS LAYOUT
-# =====================
-st.header("Contoh Columns")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("### Kolom 1")
-    st.write("Ini isi kolom pertama")
-
-with col2:
-    st.markdown("### Kolom 2")
-    st.write("Ini isi kolom kedua")
+        st.write("Silakan centang persetujuan terlebih dahulu")
