@@ -1,83 +1,69 @@
 import streamlit as st
-import pandas as pd
-from datetime import date
 
 # =====================
-# WRITE
+# JUDUL APLIKASI
 # =====================
-st.write("Ini adalah contoh penggunaan st.write()")
-
-# =====================
-# TEXT ELEMENTS
-# =====================
-st.title("Aplikasi Streamlit Dasar")
-st.header("Modul Streamlit Halaman 9–11")
-st.subheader("Contoh Text Elements")
-st.caption("Praktikum Streamlit")
-
-st.markdown("""
-Streamlit menyediakan berbagai **text elements** seperti:
-- Markdown
-- Title
-- Header
-- Subheader
-- Caption
-""")
-
-st.text("Ini adalah contoh st.text()")
-
-st.code("""
-import streamlit as st
-st.write("Hello World")
-""", language="python")
+st.title("Aplikasi Hitung Bangun Datar")
 
 # =====================
-# DATA DISPLAY
+# PILIH OPERASI
 # =====================
-st.header("Data Display")
-
-data = {
-    "Nama": ["Andi", "Budi", "Citra"],
-    "Nilai": [85, 90, 88]
-}
-
-df = pd.DataFrame(data)
-
-st.subheader("Dataframe")
-st.dataframe(df)
-
-st.subheader("Table")
-st.table(df)
-
-# =====================
-# BASIC WIDGETS
-# =====================
-st.header("Basic Widgets")
-
-# Text Input
-nama = st.text_input("Masukkan Nama")
-
-# Number Input
-umur = st.number_input("Masukkan Umur", min_value=0)
-
-# Datetime Input
-tanggal_lahir = st.date_input("Tanggal Lahir", value=date.today())
-
-# Radio Button
-jenis_kelamin = st.radio(
-    "Jenis Kelamin",
-    ("Laki-laki", "Perempuan")
+operasi = st.selectbox(
+    "Pilih operasi perhitungan",
+    ["Hitung Keliling"]
 )
 
-# Checkbox
-setuju = st.checkbox("Saya menyetujui data di atas")
+# =====================
+# PILIH JENIS HITUNG
+# =====================
+st.subheader("Pilih Hitung")
 
-# Button
-if st.button("Tampilkan Data"):
-    if setuju:
-        st.write("Nama:", nama)
-        st.write("Umur:", umur)
-        st.write("Tanggal Lahir:", tanggal_lahir)
-        st.write("Jenis Kelamin:", jenis_kelamin)
-    else:
-        st.write("Silakan centang persetujuan terlebih dahulu")
+pilihan = st.radio(
+    "",
+    ("Keliling Segitiga", "Keliling Persegi Panjang", "Keliling Jajar Genjang")
+)
+
+# =====================
+# FUNGSI PERHITUNGAN
+# =====================
+def keliling_segitiga(a, b, c):
+    return a + b + c
+
+def keliling_persegi_panjang(p, l):
+    return 2 * (p + l)
+
+def keliling_jajar_genjang(a, b):
+    return 2 * (a + b)
+
+# =====================
+# INPUT & PROSES
+# =====================
+hasil = None
+
+if pilihan == "Keliling Segitiga":
+    sisi_a = st.number_input("Sisi A", value=20.0)
+    sisi_b = st.number_input("Sisi B", value=30.0)
+    sisi_c = st.number_input("Sisi C", value=100.0)
+
+    if st.button("Hitung"):
+        hasil = keliling_segitiga(sisi_a, sisi_b, sisi_c)
+
+elif pilihan == "Keliling Persegi Panjang":
+    panjang = st.number_input("Panjang", value=10.0)
+    lebar = st.number_input("Lebar", value=5.0)
+
+    if st.button("Hitung"):
+        hasil = keliling_persegi_panjang(panjang, lebar)
+
+elif pilihan == "Keliling Jajar Genjang":
+    sisi_a = st.number_input("Sisi A", value=10.0)
+    sisi_b = st.number_input("Sisi B", value=5.0)
+
+    if st.button("Hitung"):
+        hasil = keliling_jajar_genjang(sisi_a, sisi_b)
+
+# =====================
+# OUTPUT HASIL
+# =====================
+if hasil is not None:
+    st.markdown(f"## 🟢 Hasil: **{hasil}**")
